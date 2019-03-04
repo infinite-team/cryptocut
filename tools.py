@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------
+# Copyright (c) 2019, Infinite Development Team.
+#
+# Distributed under the terms of the Modified BSD License.
+#
+# The full license is in the file COPYING.txt, distributed with this software.
+#------------------------------------------------------------------------------
+
 import warnings
 import inspect
 import random
@@ -43,7 +51,7 @@ def RandomGenerator(level):
             Password+=linecache.getline(TheFilePath,RandomObject.randint(1,FileLen(TheFilePath)))[0:-1]+"-"
         Password+=linecache.getline(TheFilePath,RandomObject.randint(1,FileLen(TheFilePath)))[0:-1]
     if (level==2):
-        for i in range (1,4):
+        for i in range (1,5):
             Password+=linecache.getline(TheFilePath,RandomObject.randint(1,FileLen(TheFilePath)))[0:-1]+"-"
         Password+=linecache.getline(TheFilePath,RandomObject.randint(1,FileLen(TheFilePath)))[0:-1]
     if (level==3):

@@ -1,0 +1,3 @@
+Founders and main developers : Alireza Mohammadnezhad (Aryan the Limitless) and Ali Taqhikhani (Narcissus) [Infinite Team]
+Windows Library developer : Amin Ansari (Ecarin)
+Icon developers : Kirill Kazachek, Just-UI,

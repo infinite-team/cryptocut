@@ -1,0 +1,133 @@
+import os
+import clipboard
+
+from enaml.widgets.api import MainWindow, Container, ComboBox, ImageView, Label, Field, PushButton, Window
+from enaml.layout.api import vbox, hbox, spacer, align
+from enaml.image import Image
+from enaml.styling import StyleSheet, Style, Setter
+from enaml.icon import Icon, IconImage
+
+path = os.path.dirname(os.path.abspath(__file__))
+imgfolder= os.path.join(path ,"cryptocut" ,"Files")
+imgfolder = "/run/media/aarmn/ADATA-HD720_Aryan_IMP/Projects/Mine/Infinite/project/cryptocut/Files/"
+logoset = IconImage(image=Image(data=open(os.path.join(imgfolder, "Logo.png"),'rb').read()))
+logo = Icon(images=[logoset])
+
+enamldef BannerSheet(StyleSheet):
+    Style:
+        element = 'Label'
+        style_class = 'banner'
+        Setter:
+            field = 'background'
+            value = ('lineargradient(x1: 0, y1:0, x2:1, y2:1, '
+                    'stop: 0 #222222, stop: 0.5 #1A1A1A, stop: 1 #111111)')
+        Setter:
+            field = 'color'
+            value = '#FFFFEF'
+        Setter:
+            field = 'padding'
+            value = '5px'
+        Setter:
+            field = 'font'
+            value = '18pt Verdana'
+
+enamldef Main(MainWindow):
+    title = 'CryptoCut - Donate'
+    icon = logo
+    maximum_size = (1000, 500)
+    BannerSheet:
+        pass
+    Container:
+        padding=0
+        constraints = [
+                vbox(headline,mother),
+                headline.top == top,
+                headline.left == left,
+                headline.right == right,
+                headline.bottom + 10 == mother.top
+        ]
+        Container: headline:
+            Label:
+                text = 'Donate like a HERO!'
+                style_class << 'banner'
+
+        Container: mother:
+            constraints = [
+                hbox(btc, eth, ltc, dash)
+            ]
+            Container: btc:
+                ImageView: btcimg:
+                    image << Image(data=open(os.path.join(imgfolder, "Bitcoin.png"),'rb').read())
+                    scale_to_fit = True
+                    allow_upscaling=True
+                    preserve_aspect_ratio = True
+                    maximum_size = (250,250)
+                ImageView: btcqr:
+                    image << Image(data=open(os.path.join(imgfolder, "Bitcoin-qr.jpg"),'rb').read())
+                    scale_to_fit = True
+                    allow_upscaling=True
+                    preserve_aspect_ratio = True
+                    maximum_size = (250, 250)
+                Field:
+                    text = "36eSEBaZCRRnSLCRWz2M5anu9LbBUf13CE"
+                    read_only=True
+                PushButton:
+                    text = "Copy!"
+                    clicked :: clipboard.copy("36eSEBaZCRRnSLCRWz2M5anu9LbBUf13CE")
+            Container: eth:
+                ImageView: ethimg:
+                    image << Image(data=open(os.path.join(imgfolder, "Ethereum.png"),'rb').read())
+                    scale_to_fit = True
+                    allow_upscaling=True
+                    preserve_aspect_ratio = True
+                    maximum_size = (250, 250)
+                ImageView: ethqr:
+                    image << Image(data=open(os.path.join(imgfolder, "Ethereum-qr.jpg"),'rb').read())
+                    scale_to_fit = True
+                    allow_upscaling=True
+                    preserve_aspect_ratio = True
+                    maximum_size = (250, 250)
+                Field:
+                    text = "0xef9e0697af2b4b9b85eda19159ce98150cb05ff7"
+                    read_only=True
+                PushButton:
+                    text = "Copy!"
+                    clicked :: clipboard.copy("0xef9e0697af2b4b9b85eda19159ce98150cb05ff7")
+            Container: ltc:
+                ImageView: ltcimg:
+                    image << Image(data=open(os.path.join(imgfolder, "Litecoin.png"),'rb').read())
+                    scale_to_fit = True
+                    allow_upscaling=True
+                    preserve_aspect_ratio = True
+                    maximum_size = (250, 250)
+                ImageView: ltcqr:
+                    image << Image(data=open(os.path.join(imgfolder, "Litecoin-qr.jpg"),'rb').read())
+                    scale_to_fit = True
+                    allow_upscaling=True
+                    preserve_aspect_ratio = True
+                    maximum_size = (250, 250)
+                Field:
+                    text = "LNfT4ZJ9BBxAzzboP7aoz6iY2SMxRJwa5k"
+                    read_only=True
+                PushButton:
+                    text = "Copy!"
+                    clicked :: clipboard.copy("LNfT4ZJ9BBxAzzboP7aoz6iY2SMxRJwa5k")
+            Container: dash:
+                ImageView: dashimg:
+                    image << Image(data=open(os.path.join(imgfolder, "Dash.png"),'rb').read())
+                    scale_to_fit = True
+                    allow_upscaling=True
+                    preserve_aspect_ratio = True
+                    maximum_size = (250, 250)
+                ImageView: dashqr:
+                    image << Image(data=open(os.path.join(imgfolder, "Dash-qr.jpg"),'rb').read())
+                    scale_to_fit = True
+                    allow_upscaling=True
+                    preserve_aspect_ratio = True
+                    maximum_size = (250, 250)
+                Field:
+                    text = "XtBdzap7NyKY2RQ5LUDBbMruWPm8JD87Kj"
+                    read_only=True
+                PushButton:
+                    text = "Copy!"
+                    clicked :: clipboard.copy("tBdzap7NyKY2RQ5LUDBbMruWPm8JD87Kj")
