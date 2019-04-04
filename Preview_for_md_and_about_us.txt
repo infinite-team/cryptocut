@@ -1,0 +1,38 @@
+Description:
+CryptoCut is a easy-to-use and user-friendly cross-platform application to communicate securely without changing a lot of things around us. you can code your message as easy as a shortcut and decode it with another. the only thing you need is to sync your cipher codes to communicate securely through any safe and unsafe communication framework. CryptoCut let you to make a human-readable secure code. simple and easy to use for daily communications if you care about your privacy. another important fact about this application is it's build with qt based technology for settings UI page and all of widgets are native to your OS. Even you can set program service(daemon) as startup and open configs page with one click on tray icon.
+This app wasn't possible without ditching classes (!!!) and some C Scores so please help us to make this project more meaningful 
+
+Credits:
+Founders and main developers : Alireza Mohammadnezhad (Aryan the Limitless) and Ali Taqhikhani (Narcissus) [known as Infinite Team]
+Logo designer : Arman ZavarMoosavi (Old one by Alireza Mohammadnezhad)
+App pictures designer : Kirill Kazachek, BrandBundle, Eazy (thanks to iconfinder to connect us and cc license to redefine freedom in media)
+Gitlab and Github to host our project and millions of other open-source projects for free
+Also thanks to qt, enaml, clipboard, atom(as python lib and editor too!), notify2, pystray, Sultan, pyautogui and other python packages make this possible and python for ease of development!
+And Special thanks for people who want to contribute to this project, fork it and donate to us!
+
+License:
+The 2-Clause BSD License
+
+Copyright 2019 Infinite-Team
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+To-Do:
+CLI setting interface
+GPG method
+Data Cipher method 
+More Languages for app and documents 
+Test on MacOS
+Better Dictionary and Dictionaries compatibility check in code by Hash of Dictionary
+Separate to 2 Groups for file and in-line encryption
+Cipher code possibility verifier
+Improve code quality and variables standards
+Mobile version!
+
+

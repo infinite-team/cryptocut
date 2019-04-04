@@ -11,10 +11,20 @@ import inspect
 import random
 import linecache
 import os
+import appdirs
 
 path = os.path.dirname(os.path.abspath(__file__))
 
 TheFilePath = os.path.join(path, "Files", "words-list.txt")
+
+appname="CryptoCut"
+appauthor="Infinite"
+
+appdirs.user_cache_dir(appname,appauthor)
+appdirs.user_config_dir(appname,appauthor)
+appdirs.user_data_dir(appname,appauthor)
+appdirs.user_log_dir(appname,appauthor)
+appdirs.user_state_dir(appname,appauthor)
 
 def FileLen(fname):
     with open(fname) as f:

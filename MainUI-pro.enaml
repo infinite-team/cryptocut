@@ -1,0 +1,488 @@
+#------------------------------------------------------------------------------
+# Copyright (c) 2019, Infinite Development Team.
+#
+# Distributed under the terms of the Modified BSD License.
+#
+# The full license is in the file LICENSE, distributed with this software.
+#------------------------------------------------------------------------------
+
+#ALL BACK CODE
+#add Active session on to of Key
+
+import os
+import clipboard
+import webbrowser
+#import configparser
+#import notify
+
+from enaml.icon import Icon, IconImage
+from enaml.image import Image
+from enaml.layout.api import hbox, vbox, spacer, align
+from enaml.styling import StyleSheet, Style, Setter
+from enaml.widgets.api import MainWindow, Window, MultilineField, ActionGroup, CheckBox, MenuBar, Menu, Container, ToolBar, ToolButton, Menu, Action, Html, Field, Window, Form, Label, Slider, PushButton, GroupBox, ComboBox, ImageView, Html, Notebook, Page
+from enaml.core.include import Include
+
+path = os.path.dirname(os.path.abspath(__file__))
+imgfolder = os.path.join(path ,"Files")
+filefolder = os.path.join(path ,"Files")
+
+
+#Dont match to dict
+#Not a Dict
+#Faild to Apply setting
+
+#0 > UpdateSettingNotif
+#1 > NotUpdateSettingNotif
+#2 > DASHNotif
+#3 > ETHNotif
+#4 > BTCNotif
+#5 > LTCNotif
+
+def load_icon(name):
+    fname = os.path.join(path, 'Files', '%s.png' % name)
+    with open(fname, 'rb') as f:
+        data = f.read()
+    img = Image(data=data)
+    icg = IconImage(image=img)
+    return Icon(images=[icg])
+
+About = load_icon('Info')
+Donate = load_icon('Cash')
+Gitlab = load_icon('Gitlab')
+Github = load_icon('Github')
+Github = load_icon('Github')
+Keys = load_icon('Keys')
+RandomCipherKey = load_icon('RandomCipherKey')
+AddProfile = load_icon('AddProfile')
+
+AppVersion="0.5.3"
+ActiveSession="jafar"
+
+BTCAdd="36eSEBaZCRRnSLCRWz2M5anu9LbBUf13CE"
+ETHAdd="0xef9e0697af2b4b9b85eda19159ce98150cb05ff7"
+DASHAdd="XtBdzap7NyKY2RQ5LUDBbMruWPm8JD87Kj"
+LTCAdd="LNfT4ZJ9BBxAzzboP7aoz6iY2SMxRJwa5k"
+
+power={1:"Weak",2:"Secure",3:"Good",4:"Strong"}
+
+enamldef KeysTabLayout(Page):
+	attr username
+	attr decryptshortcut
+	attr encryptshortcut
+	attr encryptemethod
+	attr cipherkey
+	title = username
+	Container:
+		Form:
+			padding=0
+			Label:
+				text = "Profile Name :"
+			Field:
+				text = username
+			Label:
+				text = "Encryption Method :"
+			ComboBox:methodchoose:
+				index = 0 #tmp
+				items = ['method1','method2']
+			Label:
+				text = "Encryption Key :"
+			Field:
+				text = cipherkey
+				echo_mode = 'password'
+		Container:
+			padding=0
+			constraints << [vbox(codeshortcutlabel,code,decodeshortcutlabel,decode)]
+			Label: codeshortcutlabel:
+				text << 'Enter coding shortcut'
+			Form:code:
+				padding=0
+				PushButton: codestartandshow:
+					pass
+				PushButton: resetcodeshortcut:
+					text << 'Reset'
+			Label:decodeshortcutlabel:
+				text << 'Enter decoding shortcut'
+			Form:decode:
+				padding=0
+				PushButton: decodestartandshow:
+					pass
+				PushButton: resetdecodeshortcut:
+					text << 'Reset'
+		Container:
+			padding=0
+			PushButton:
+				text = "Choose as Active"
+			Container:
+				constraints=[hbox(applybutton,deletebutton),applybutton.width==deletebutton.width]
+				padding=0
+				PushButton:applybutton:
+					text = "Apply"
+				PushButton:deletebutton:
+					text = "Delete"
+
+
+enamldef KeysPage(Window):
+	title = 'CryptoCut - Cipher Keys Center'
+	icon = load_icon("Logo")
+	minimum_size = (450,450)
+	Container:motherkey:
+		Label:
+			minimum_size = (10,60)
+			text="  Active Profile : {}".format(ActiveSession)
+			StyleSheet:
+				Style:
+					Setter:
+						field = 'font'
+						value = 'vazir'
+					Setter:
+                        field = 'background-color'
+                        value = 'black'
+					Setter:
+                        field = 'background-color'
+                        value = 'black'
+					Setter:
+						field = 'border-radius'
+						value = "30"
+					Setter:
+						field = 'text-align'
+						value = 'center'
+					Setter:
+						field = 'color'
+						value = 'white'
+					Setter:
+						field = 'font-size'
+						value = '15pt'
+					Setter:
+						field = 'padding'
+						value = '5px'
+		Notebook:listprofiles:
+			tab_style="document"
+			tabs_closable=False
+			Include: inc:
+            	objects = [KeysTabLayout(username="jafar",encryptemethod=0,cipherkey="holyshit")]
+		ToolButton: search:
+				text = 'Add New Profile'
+				icon = AddProfile
+				button_style = 'text_beside_icon'
+
+
+enamldef RandomPage(Window):
+	title = 'CryptoCut - Random Cipher Key'
+	icon = load_icon("Logo")
+	minimum_size = (450,200)
+	Container:motherrandom:
+		GroupBox: makerandompass:
+			title = "Random Cipher Code"
+			Container:
+				constraints = [vbox(methodcipher,ciphercodegenlabel,level,cipherkeyoutput,generatecipherkey,spacer)]
+				Form:methodcipher:
+					padding=0
+					Label:ciphertype:
+						text="ciphering method"
+					ComboBox:methodchoose:
+						index=0 
+						items=['method1','method2']
+				Label: ciphercodegenlabel:
+					text << 'Cipher code generator strength :'
+				Form:level:
+					padding=0
+					Slider:slider:
+						tick_interval = 1
+						maximum = 4
+						minimum = 1
+						tracking = False
+					Label: 
+						text << '   {}'.format(power[slider.value])
+				Field:cipherkeyoutput:
+					read_only=True
+					placeholder = 'Random cipher key output'
+				PushButton: generatecipherkey:
+					text << 'Generate!'
+
+# enamldef UserPage(Window):
+
+enamldef AboutUsPage(Window):
+	title = 'CryptoCut - About Us'
+	icon = load_icon("Logo")
+	minimum_size = (600,600)
+	Container:
+		constraints = [vbox(headline,imgscontain,textus)]
+		Container: headline:
+			Label:
+				text = 'Thanks to read about us! :)'
+				minimum_size = (10,60)
+				StyleSheet:
+					Style:
+						Setter:
+							field = 'font'
+							value = 'vazir'
+						Setter:
+							field = 'background-color'
+							value = 'black'
+						Setter:
+							field = 'background-color'
+							value = 'black'
+						Setter:
+							field = 'border-radius'
+							value = "30"
+						Setter:
+							field = 'text-align'
+							value = 'center'
+						Setter:
+							field = 'color'
+							value = 'white'
+						Setter:
+							field = 'font-size'
+							value = '15pt'
+						Setter:
+							field = 'padding'
+							value = '5px'
+		Container: imgscontain:
+			constraints = [hbox(applogo,spacer,appinfo)]
+			ImageView:applogo:
+                image << Image(data=open(os.path.join(imgfolder, "Logo.png"),'rb').read())
+                scale_to_fit = True
+                allow_upscaling=True
+                maximum_size = (250, 250)
+                minimum_size = (250, 250)
+			Container:appinfo:   
+                constraints = [vbox(appdetail,hbox(logoteam,spacer))]
+                Label:appdetail:
+                    maximum_size = (150, 150)
+                    minimum_size = (150, 150)
+                    text = 'Name : CryptoCut\nVersion : {}\nDeveloper : Infinite-Team\nWebsite : h'.format(AppVersion)
+                ImageView:logoteam:
+                    image << Image(data=open(os.path.join(imgfolder, "Team-Logo.png"),'rb').read())
+                    scale_to_fit = True
+                    allow_upscaling=True
+                    maximum_size = (75, 100)
+		Container: textus:
+			Html:
+				source = open(os.path.join(imgfolder, "About.html"),'rb').read()
+
+enamldef DonatePage(Window):
+	title = 'CryptoCut - Donate'
+	icon = load_icon("Logo")
+	maximum_size = (300,300)
+	Container:
+		padding=0
+		constraints = [
+				vbox(headline,mother),
+				headline.top == top,
+				headline.left == left,
+				headline.right == right,
+				headline.bottom + 10 == mother.top
+		]
+		Container: headline:
+			Label:
+				text = 'Donate like a HERO!'
+				minimum_size = (10,60)
+				StyleSheet:
+					Style:
+						Setter:
+							field = 'font'
+							value = 'vazir'
+						Setter:
+							field = 'background-color'
+							value = 'black'
+						Setter:
+							field = 'background-color'
+							value = 'black'
+						Setter:
+							field = 'border-radius'
+							value = "30"
+						Setter:
+							field = 'text-align'
+							value = 'center'
+						Setter:
+							field = 'color'
+							value = 'white'
+						Setter:
+							field = 'font-size'
+							value = '15pt'
+						Setter:
+							field = 'padding'
+							value = '10px'
+		Container: mother:
+			constraints = [hbox(btc, eth, ltc, dash)]
+			Container: btc:
+				ImageView: btcimg:
+					image << Image(data=open(os.path.join(imgfolder, "Bitcoin.png"),'rb').read())
+					scale_to_fit = True
+					allow_upscaling=True
+					maximum_size = (150, 150)
+				ImageView: btcqr:
+					image << Image(data=open(os.path.join(imgfolder, "Bitcoin-qr.jpg"),'rb').read())
+					scale_to_fit = True
+					allow_upscaling=True
+					maximum_size = (150, 150)
+				Field:
+					text = BTCAdd
+					read_only=True
+				PushButton:
+					text = "Copy!"
+					clicked :: clipboard.copy(BTCAdd)
+			Container: eth:
+				ImageView: ethimg:
+					image << Image(data=open(os.path.join(imgfolder, "Ethereum.png"),'rb').read())
+					scale_to_fit = True
+					allow_upscaling=True
+					maximum_size = (150, 150)
+				ImageView: ethqr:
+					image << Image(data=open(os.path.join(imgfolder, "Ethereum-qr.jpg"),'rb').read())
+					scale_to_fit = True
+					allow_upscaling=True
+					maximum_size = (150, 150)
+				Field:
+					text = ETHAdd
+					read_only=True
+				PushButton:
+					text = "Copy!"
+					clicked :: clipboard.copy(ETHAdd)
+
+			Container: ltc:
+				ImageView: ltcimg:
+					image << Image(data=open(os.path.join(imgfolder, "Litecoin.png"),'rb').read())
+					scale_to_fit = True
+					allow_upscaling=True
+					maximum_size = (150, 150)
+				ImageView: ltcqr:
+					image << Image(data=open(os.path.join(imgfolder, "Litecoin-qr.jpg"),'rb').read())
+					scale_to_fit = True
+					allow_upscaling=True
+					maximum_size = (150, 150)
+				Field:
+					text = LTCAdd
+					read_only=True
+				PushButton:
+					text = "Copy!"
+					clicked :: clipboard.copy(LTCAdd)
+			Container: dash:
+				ImageView: dashimg:
+					image << Image(data=open(os.path.join(imgfolder, "Dash.png"),'rb').read())
+					scale_to_fit = True
+					allow_upscaling=True
+					maximum_size = (150, 150)
+				ImageView: dashqr:
+					image << Image(data=open(os.path.join(imgfolder, "Dash-qr.jpg"),'rb').read())
+					scale_to_fit = True
+					allow_upscaling=True
+					maximum_size = (150, 150)
+				Field:
+					text = DASHAdd
+					read_only=True
+				PushButton:
+					text = "Copy!"
+					clicked :: clipboard.copy(DASHAdd)
+
+enamldef Main(MainWindow):
+	title = 'CryptoCut - Setting'
+	icon = load_icon("Logo")
+	ToolBar:
+		movable=False
+		ToolButton:
+			text = 'Set Keys'
+			icon = Keys
+			button_style = 'text_under_icon'
+			clicked :: KeysPage().show()
+		ToolButton:
+			text = 'Make Key'
+			icon = RandomCipherKey
+			button_style = 'text_under_icon'
+			clicked :: RandomPage().show()
+		ToolButton:
+			text = 'About Us'
+			icon = About
+			button_style = 'text_under_icon'
+			clicked :: AboutUsPage().show()
+		ToolButton:
+			text = 'Donate'
+			icon = Donate
+			button_style = 'text_under_icon'
+			clicked :: DonatePage().show()
+		ToolButton:
+			text = 'Github'
+			icon = Github
+			button_style = 'text_under_icon'
+			clicked :: webbrowser.open("http://Github.com")
+		ToolButton:
+			text = 'Gitlab'
+			icon = Gitlab
+			button_style = 'text_under_icon'
+			clicked :: webbrowser.open("http://Gitlab.com")
+	Container:all:
+		constraints = [vbox(twoviews,settingscheckoxcontain,testzone,mainbuttons)]
+		Container:twoviews:
+			padding = 1
+			GroupBox: shortcutsettings:
+				title = "Shortcut"
+				Container:
+					constraints << [vbox(codeshortcutlabel
+					,code
+					,decodeshortcutlabel
+					,decode)
+					]
+					Label: codeshortcutlabel:
+						text << 'Enter coding shortcut'
+					Form:code:
+						PushButton: codestartandshow:
+							pass
+						PushButton: resetcodeshortcut:
+							text << 'Reset'
+					Label:decodeshortcutlabel:
+						text << 'Enter decoding shortcut'
+					Form:decode:
+						PushButton: decodestartandshow:
+							pass
+						PushButton: resetdecodeshortcut:
+							text << 'Reset'
+		Container:settingscheckoxcontain:
+			padding = 1
+			GroupBox: settingscheckox:
+				title << "Settings"
+				# multi line and at the end of line check box
+				Form:
+					Label:onandofflabel:
+						text = 'Turn on shortcut listener service(daemon)'
+					CheckBox:onandoff:
+						clicked :: print('Check One clicked')
+
+					Label:startuplabel:
+						text = 'Make deamon startup to start automatically on reboot'
+					CheckBox:startup:
+						clicked :: print('Check One clicked')
+
+					Label:shownotiflabel:
+						text = 'Show notification when encrypte a text'
+					CheckBox:shownotif:
+						clicked :: print('Check One clicked')
+
+					Label:pasteorjustcopylabel:
+						text = 'Paste the text when on and just copy when off'
+					CheckBox:pasteorjustcopy:
+						clicked :: print('Check One clicked')
+
+					Label:senddictverifylabel:
+						text = 'send a hash of dict on code to verify dict'
+					CheckBox:senddictverify:
+						clicked :: print('Check One clicked')
+
+					Label:trayiconlabel:
+						text = 'show tray icon when deamon this option is on'
+					CheckBox:trayicon:
+						clicked :: print('Check One clicked')
+
+					Label:normalkeylabel:
+						text = 'Use normal key for encrypting text (Not recommended for usual usage)'
+					CheckBox:normalkey:
+						clicked :: print('Check One clicked')
+
+		MultilineField:testzone:
+			text="Test your CryptoCut HERE"
+		Container: mainbuttons:
+			padding=1
+			constraints = [hbox(applysetting,resetsetting),applysetting.width==resetsetting.width]
+			PushButton: applysetting:
+				text="Apply Settings"
+			PushButton: resetsetting:
+				text="Reset to default"
