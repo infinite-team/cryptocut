@@ -5,47 +5,57 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 #------------------------------------------------------------------------------
+import keyboard
+import pyperclip
+import pyautogui
+import time
+from tools import EncryptMethodOne,DecryptMethodOne
 
-import notify2
-from pynput import keyboard
-import configparser
+def KeyboadStuff():
+    try:
+        time.sleep(0.25)
+        pyautogui.hotkey('ctrl', 'a', 'x')
+        # time.sleep(0.5)
+        text = pyperclip.paste()
+        text = str(text)
+        print(text)
+        print(text[0:6])
+        if(text[0:7] == 'gAAAAAB' and text[-1] == '='):
+            print('--------------------------------------------------------------')
+            print("En message")
+            print('--------------------------------------------------------------')
+            print('Encrypt text:', text)
+            t = DecryptMethodOne(text)
+            # print(type(t))
+            t = str(t)
+            t = t[2:-1]
+            print(pyperclip.copy(t))
+            time.sleep(0.25)
+            pyautogui.typewrite(t, interval=0.08)
+            time.sleep(0.25)
+            print(pyperclip.copy(''))
+        else:
+            print('--------------------------------------------------------------')
+            print("not En message")
+            print('--------------------------------------------------------------')
 
-notify2.init("CryptoCut")
-DoneNofification = notify2.Notification("Done","Encrypted successfully","notification-message-info")
-# DoneNofification.show()
+            t = EncryptMethodOne(text)
+            t = str(t)
+            t = t[2:-1]
+            
+            print(pyperclip.copy(t))
+            time.sleep(0.25)
+            pyautogui.hotkey('ctrl', 'v')
+            time.sleep(0.25)
+            print(pyperclip.copy(''))
+    except:
+        print("Error")
 
+def main():
+    keyboard.add_hotkey('ctrl+shift+q', KeyboadStuff)
+    keyboard.wait()
+if __name__ == '__main__':
+    main()
 
-COMBINATIONS = [
-    {keyboard.Key.shift, keyboard.Key.ctrl,keyboard.KeyCode(char='A')}
-]
-
-# The currently active modifiers
-current = set()
-
-def execute():
-    print ("Do Something")
-    
-	config = configparser.ConfigParser()
-	config['DEFAULT'] = {'ServerAliveInterval': '45','Compression': 'yes','CompressionLevel': '9'}
-	config['bitbucket.org'] = {}
-	config['bitbucket.org']['User'] = 'hg'
-	config['topsecret.server.com'] = {}
-	topsecret = config['topsecret.server.com']
-	topsecret['Port'] = '50022'     # mutates the parser
-	topsecret['ForwardX11'] = 'no'  # same here
-	config['DEFAULT']['ForwardX11'] = 'yes'
-	with open('example.ini', 'w') as configfile:
-    	config.write(configfile)
-
-def on_press(key):
-    if any([key in COMBO for COMBO in COMBINATIONS]):
-        current.add(key)
-        if any(all(k in current for k in COMBO) for COMBO in COMBINATIONS):
-            execute()
-
-def on_release(key):
-    if any([key in COMBO for COMBO in COMBINATIONS]):
-        current.remove(key)
-
-with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
-    listener.join()
+# gAAAAABcot7JjMSsHcg4oot7H4idSKcJyYAljmwFOv9vSsIhpo--Hgy4RbcY1kCHvy0HJpDYGIPBfp60UJC42ySHRH6bf3HL-Q ==
+# gAAAAABcot7JjMSsHcg4oot7H4idSKcJyYAljmwFOv9vSsIhpo--Hgy4RbcY1kCHvy0HJpDYGIPBfp60UJC42ySHRH6bf3HL-Q ==

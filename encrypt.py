@@ -3,5 +3,12 @@
 #
 # Distributed under the terms of the Modified BSD License.
 #
-# The full license is in the file LICENSE, distributed with this software.
+# The full license is in the file COPYING.txt, distributed with this software.
 #------------------------------------------------------------------------------
+
+import notify2
+
+
+notify2.init("CryptoCut")
+DoneNofification = notify2.Notification("Done","Encrypted successfully","notification-message-info")
+DoneNofification.show()
