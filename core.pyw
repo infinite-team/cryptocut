@@ -13,8 +13,16 @@ from tools import EncryptMethodOne,DecryptMethodOne
 
 def KeyboadStuff():
     try:
+        OrgClipboard = pyperclip.paste()
         time.sleep(0.25)
-        pyautogui.hotkey('ctrl', 'a', 'x')
+        pyperclip.copy('')
+        SelectionDetect = str(pyautogui.hotkey('ctrl', 'c'))
+        Selection = pyperclip.paste()
+        print("Selection: "+str(len(Selection)))
+        if(len(Selection) > 0):
+            pyautogui.hotkey('ctrl', 'c')
+        else:
+            pyautogui.hotkey('ctrl', 'a', 'x')
         # time.sleep(0.5)
         text = pyperclip.paste()
         text = str(text)
@@ -33,7 +41,7 @@ def KeyboadStuff():
             time.sleep(0.25)
             pyautogui.typewrite(t, interval=0.08)
             time.sleep(0.25)
-            print(pyperclip.copy(''))
+            print(pyperclip.copy(OrgClipboard))
         else:
             print('--------------------------------------------------------------')
             print("not En message")
@@ -47,8 +55,8 @@ def KeyboadStuff():
             time.sleep(0.25)
             pyautogui.hotkey('ctrl', 'v')
             time.sleep(0.25)
-            print(pyperclip.copy(''))
-    except:
+            print(pyperclip.copy(OrgClipboard))
+    except MemoryError:
         print("Error")
 
 def main():
