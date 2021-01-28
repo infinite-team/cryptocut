@@ -1,0 +1,25 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <!-- PNG -->
+    <file>Team-Logo-Text.png</file>
+    <file>Team-Logo.png</file>
+    <file>AddProfile.png</file>
+    <file>Info.png</file>
+    <file>Github.png</file>
+    <file>Gitlab.png</file>
+    <file>Keys.png</file>
+    <file>Cash.png</file>
+    <file>Bitcoin.png</file>
+    <file>Ethereum.png</file>
+    <file>Dash.png</file>
+    <file>Litecoin.png</file>
+    <file>dollar.png</file>
+    <file>RandomCipherKey.png</file>
+    <!-- ICOs -->
+    <file>Logo.ico</file>
+    <!-- Texts -->
+    <file>words-list.txt</file>
+    <file>About.html</file>
+</qresource>
+</RCC>
+ 
