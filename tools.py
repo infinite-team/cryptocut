@@ -68,3 +68,13 @@ def symmetric__decrypt(encrypted_message,key):
     return(f.decrypt(encrypted_message).decode('utf-8'))
 
 
+
+if __name__ == '__main__':
+    user_key = create_user_key("13811394")
+    fernet = Fernet(user_key)
+    random_key = Fernet.generate_key()
+    symmetric_key = fernet.encrypt(random_key)
+    with open("symmetric.key", "wb") as key_file:
+        key_file.write(symmetric_key)
+    print(symmetric__encrypt("hello",read_symmetric_key()))
+    # print(symmetric__decrypt("gAAAAABgWR9JPH2ozm-XmTbyEvEgamS4Fu7jYUKS4p41chCGUcmpmlKHhexu4NqkcLV4cgsOuUrlVoUlOy_mAMO8BH2SkvAIoA==",read_symmetric_key()))
