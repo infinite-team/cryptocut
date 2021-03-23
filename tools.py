@@ -48,33 +48,34 @@ def create_user_key(user_pass):
     return user_key
 
 def read_symmetric_key(file_name = 'symmetric.key'):
-    # TODO : add a verification method for key 
+    '''open the key file and check if the user pass is correct'''
+
     with open(file_name,'rb') as f:
         encrypted_key = f.read()
     user_pass = input("enter your password : ")
     userbase_key = create_user_key(user_pass)
     fernet = Fernet(userbase_key)
-    decrypted_key = fernet.decrypt(encrypted_key)
+    try:
+        decrypted_key = fernet.decrypt(encrypted_key)
+    except:
+        return 0
     return decrypted_key
 
 def symmetric__encrypt(message,key):
+    if(not key):
+        return "Wrong password !"
     message = message.encode()
     f = Fernet(key)
     return(f.encrypt(message))
 
 def symmetric__decrypt(encrypted_message,key):
+    if(not key):
+        return "Wrong password !"
     encrypted_message = encrypted_message.encode('utf-8')
     f = Fernet(key)
     return(f.decrypt(encrypted_message).decode('utf-8'))
 
 
-
 if __name__ == '__main__':
-    user_key = create_user_key("13811394")
-    fernet = Fernet(user_key)
-    random_key = Fernet.generate_key()
-    symmetric_key = fernet.encrypt(random_key)
-    with open("symmetric.key", "wb") as key_file:
-        key_file.write(symmetric_key)
     print(symmetric__encrypt("hello",read_symmetric_key()))
-    # print(symmetric__decrypt("gAAAAABgWR9JPH2ozm-XmTbyEvEgamS4Fu7jYUKS4p41chCGUcmpmlKHhexu4NqkcLV4cgsOuUrlVoUlOy_mAMO8BH2SkvAIoA==",read_symmetric_key()))
+    print(symmetric__decrypt("gAAAAABgWlN_jy_6a_oacOzJumSPOh6RFOkN1Rha7qjinWieVKS75b_bgXkowI8lpBCH8sDzWYayuOldU9k3ismB-0NcMHF3Ew==",read_symmetric_key()))

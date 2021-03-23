@@ -40,7 +40,7 @@ class WidgetMainMenu(QWidget):
         # self.DonateButton.setBackgroundRole(QIcon(QPixmap(":/Bitcoin.png")))
         self.DonateButton.setFont(QFont("Vazir"))
         self.DonateButton.setMinimumSize(50,100)
-        self.DonateButton.setText("FUCckK")
+        self.DonateButton.setText("test")
 
         self.MainToolbar.addWidget(self.DonateButton)
 
