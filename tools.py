@@ -10,6 +10,9 @@
 import os
 import appdirs
 from cryptography.fernet import Fernet
+import clipboard
+from art import *
+import colorful as cf
 
 appname="CryptoCut"
 appauthor="Infinite"
@@ -21,7 +24,6 @@ config_path = appdirs.user_config_dir(appname,appauthor)
 data_path = appdirs.user_data_dir(appname,appauthor)
 log_path = appdirs.user_log_dir(appname,appauthor)
 dtate_path = appdirs.user_state_dir(appname,appauthor)
-
 
 def create_user_key(user_pass):
 
@@ -58,24 +60,27 @@ def read_symmetric_key(file_name = 'symmetric.key'):
     try:
         decrypted_key = fernet.decrypt(encrypted_key)
     except:
-        return 0
+        return False
     return decrypted_key
-
-def symmetric__encrypt(message,key):
+# TODO : add an enable/disable option for clipboard content 
+def symmetric_encrypt(message,key):
     if(not key):
-        return "Wrong password !"
+        return False
     message = message.encode()
     f = Fernet(key)
-    return(f.encrypt(message))
+    output = f.encrypt(message)
+    clipboard.copy(output.decode('utf-8'))
+    return(output)
 
-def symmetric__decrypt(encrypted_message,key):
+def symmetric_decrypt(encrypted_message,key):
     if(not key):
-        return "Wrong password !"
+        return False
     encrypted_message = encrypted_message.encode('utf-8')
     f = Fernet(key)
-    return(f.decrypt(encrypted_message).decode('utf-8'))
+    output = f.decrypt(encrypted_message).decode('utf-8')
+    clipboard.copy(output)
+    return(output)
 
 
 if __name__ == '__main__':
-    print(symmetric__encrypt("hello",read_symmetric_key()))
-    print(symmetric__decrypt("gAAAAABgWlN_jy_6a_oacOzJumSPOh6RFOkN1Rha7qjinWieVKS75b_bgXkowI8lpBCH8sDzWYayuOldU9k3ismB-0NcMHF3Ew==",read_symmetric_key()))
+    print(symmetric_encrypt("hello"))

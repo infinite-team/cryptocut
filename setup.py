@@ -8,28 +8,33 @@
 
 import platform
 from tools import create_user_key
+from art import *
+import colorful as cf
+
 # detect OS
 # install tools for specific OS/distro
 # copy files
+
 
 def first_run_tui():
     '''
     first setups and creating key's and personal passwords
     '''
     import os
-
-    
     if (platform.system() == "Darwin"):
         pass
     if (platform.system() == "Windows"):
-        pass
+        os.system("pip install -r requirements.txt")
+        # pass
     if (platform.system() == "Linux"):
         pass
-        # os.system("pip install -r req.txt")
     from cryptography.fernet import Fernet
 
-    print("hello from Infinite Team.")
-    user_pass = input("enter your password(we use this for our symmetric encryption.its recommanded to choose a strong password) :")
+    cryptocut_art = text2art("cRYPTOcUT","confused3")
+    setup_art=text2art("setup")
+    print('\n',cf.green(cryptocut_art))
+    print(cf.cyan(setup_art))
+    user_pass = input(cf.yellow("enter your password for symmetric encryption : "))
     user_key = (create_user_key(user_pass))
     # generate a random secret for user using crypto lib
     fernet = Fernet(user_key)
@@ -39,7 +44,7 @@ def first_run_tui():
     # TODO : we can use a diffrent path for this
     with open("symmetric.key", "wb") as key_file:
         key_file.write(symmetric_key)
-    print("done! \nsuccessfully initialized the symmetric key")
+    print(cf.green("done! \nsuccessfully initialized the symmetric key"))
 
 
 if __name__ == '__main__':
