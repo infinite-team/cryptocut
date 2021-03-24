@@ -10,9 +10,9 @@
 import os
 import appdirs
 from cryptography.fernet import Fernet
-import clipboard
-from art import *
-import colorful as cf
+# import clipboard
+# from art import *
+# import colorful as cf
 
 appname="CryptoCut"
 appauthor="Infinite"
@@ -80,7 +80,11 @@ def symmetric_decrypt(encrypted_message,key):
     output = f.decrypt(encrypted_message).decode('utf-8')
     clipboard.copy(output)
     return(output)
-
+def keyboard_shortcut():
+    import safe_entry
+    
 
 if __name__ == '__main__':
-    print(symmetric_encrypt("hello"))
+    import keyboard
+    keyboard.add_hotkey('ctrl+shift+o',lambda:keyboard_shortcut())
+    keyboard.wait('esc')
