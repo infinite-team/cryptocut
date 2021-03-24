@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #------------------------------------------------------------------------------
 # Copyright (c) 2021, Infinite Development Team.
 #
@@ -9,10 +11,13 @@
 
 import os
 import appdirs
+import getpass
+import clipboard
+import colorful as cf
+
+from art import *
 from cryptography.fernet import Fernet
-# import clipboard
-# from art import *
-# import colorful as cf
+
 
 appname="CryptoCut"
 appauthor="Infinite"
@@ -54,7 +59,7 @@ def read_symmetric_key(file_name = 'symmetric.key'):
 
     with open(file_name,'rb') as f:
         encrypted_key = f.read()
-    user_pass = input("enter your password : ")
+    user_pass = getpass.getpass("enter your password : ")
     userbase_key = create_user_key(user_pass)
     fernet = Fernet(userbase_key)
     try:
@@ -80,11 +85,12 @@ def symmetric_decrypt(encrypted_message,key):
     output = f.decrypt(encrypted_message).decode('utf-8')
     clipboard.copy(output)
     return(output)
+
 def keyboard_shortcut():
     import safe_entry
-    
+
 
 if __name__ == '__main__':
     import keyboard
-    keyboard.add_hotkey('ctrl+shift+o',lambda:keyboard_shortcut())
+    keyboard.add_hotkey('ctrl+shift+o',keyboard_shortcut)
     keyboard.wait('esc')
